@@ -23,7 +23,7 @@ end
 local function escape(str)
 	return str:gsub(".", function(char)
 		local byte = string.byte(char)
-		if byte >= 32 and byte <= 126 and char ~= "\\" and char ~= "\"" and char ~= "\'" then
+		if byte >= 32 and byte <= 126 and char ~= "\\" and char ~= '"' and char ~= "'" then
 			return char
 		end
 		if(char == "\\") then
