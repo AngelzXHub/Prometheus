@@ -18,8 +18,13 @@ AntiTamper.SettingsDescriptor = {
 	UseDebug = {
 		type = "boolean",
 		default = true,
-		description = "Use debug library. (Recommended, however scripts will not work without debug library.)",
+		description = "Use debug library. (Recommended, however scripts will not work without debug library. - DOES NOT WORK ON ROBLOX)",
 	},
+	UseRoblox = {
+		type = "boolean",
+		default = false,
+		description = 'self explanatory - roblox Antitamper'
+	}
 }
 
 local function generateSanityCheck()
@@ -82,6 +87,31 @@ end
 function AntiTamper:init(settings) end
 
 function AntiTamper:apply(ast, pipeline)
+	if self.UseRoblox then
+		local code = [[
+		local vec = vector.create(1, 1, 1)
+		local Vec3 = Vector3.new(1, 1, 1)
+		local epsilon = 1e-6
+
+		if math.nan == math.nan then return (nil)() end
+		if string.sub(tostring({}), 8, 15) == string.sub(tostring({}), 8, 15) or not game then return (nil) end
+		if not (vec.x == 1 and vec.y == 1 and vec.z == 1) then return (nil)() end
+		if not (vector.magnitude(vec) - math.sqrt(3) <= epsilon) then return (nil)() end
+		if not (vector.magnitude(vector.normalize(vec)) - 1 <= epsilon) then return (nil)() end
+		if not (vector.magnitude(vector.normalize(vec) - vec / math.sqrt(3)) <= epsilon) then return (nil)() end
+		if not (Vec3.X == 1 and Vec3.Y == 1 and Vec3.Z == 1) then return (nil)() end
+		if not (Vec3.Magnitude - math.sqrt(3) <= epsilon) then return (nil)() end
+		if not (Vec3.Unit.Magnitude - 1 <= epsilon) then return (nil)() end
+		if not ((Vec3.Unit - Vec3 / Vec3.Magnitude).Magnitude <= epsilon) then return (nil)() end
+		-- more later...
+		]]
+		local parsed = Parser:new({LuaVersion = Enums.LuaVersion.Lua51}):parse(code);
+	    local doStat = parsed.body.statements[1];
+	    doStat.body.scope:setParent(ast.body.scope);
+	    table.insert(ast.body.statements, 1, doStat);
+		return  ast;
+	end
+
 	if pipeline.PrettyPrint then
 		logger:warn(string.format('"%s" cannot be used with PrettyPrint, ignoring "%s"', self.Name, self.Name))
 		return ast
