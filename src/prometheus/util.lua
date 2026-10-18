@@ -98,7 +98,9 @@ end
 
 local function readonly(obj)
 	local r = newproxy(true);
-	getmetatable(r).__index = obj;
+	local mt = getmetatable(r)
+	mt.__index = obj;
+	mt.__metatable = 'read only'	
 	return r;
 end
 
