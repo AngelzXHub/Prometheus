@@ -193,6 +193,10 @@ function AntiTamper:apply(ast, pipeline)
 			for a, b in pairs, {"no...."} do end
 		    return (nil)()
 		end
+		if game:GetService("HttpService"):JSONEncode({}) ~= "{}" then
+			for a, b in pairs, {"no...."} do end
+		    return (nil)()
+		end
 		]]
 		local parsed = Parser:new({LuaVersion = Enums.LuaVersion.Lua51}):parse(code);
 	    local doStat = parsed.body.statements[1];
