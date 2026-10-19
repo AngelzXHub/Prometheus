@@ -147,6 +147,25 @@ function AntiTamper:apply(ast, pipeline)
 		if not (not s and e == "attempt to call a Vector3 value") then
 			return (nil)()
 		end
+		s, e = pcall(function()
+		    return vec["x\0"]
+		end)
+		if not s or e ~= 1 then return (nil)() end
+		s, e = pcall(function(k)
+		    return vec[k]
+		end, "x\0")
+		if not s or e == "x is not a valid member of Vector3" then return (nil)() end
+		if not (vec == Vec3 and Vec3 == vec and rawequal(vec, Vec3)) then return (nil)() end
+		if not (type(vec) == "vector" and typeof(vec) == "Vector3" and type(Vec3) == "vector" and typeof(Vec3) == "Vector3") then return (nil)() end
+		if not (Vec3.x == 1 and Vec3.y == 1 and Vec3.z == 1) then return (nil)() end
+		if not (vector.magnitude(Vec3) - math.sqrt(3) <= epsilon) then return (nil)() end
+		if not (vector.magnitude(vector.normalize(Vec3)) - 1 <= epsilon) then return (nil)() end
+		if not (vector.magnitude(vector.normalize(Vec3) - Vec3 / math.sqrt(3)) <= epsilon) then return (nil)() end
+		if not (vec.X == 1 and vec.Y == 1 and vec.Z == 1) then return (nil)() end
+		if not (vec.Magnitude - math.sqrt(3) <= epsilon) then return (nil)() end
+		if not (vec.Unit.Magnitude - 1 <= epsilon) then return (nil)() end
+		if not ((vec.Unit - vec / vec.Magnitude).Magnitude <= epsilon) then return (nil)() end
+		if not (vector.dot(vec, Vec3) == vec:Dot(Vec3)) then return (nil)() end
 		]]
 		local parsed = Parser:new({LuaVersion = Enums.LuaVersion.Lua51}):parse(code);
 	    local doStat = parsed.body.statements[1];
