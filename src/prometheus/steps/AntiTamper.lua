@@ -93,82 +93,105 @@ function AntiTamper:apply(ast, pipeline)
 		local Vec3 = Vector3.new(1, 1, 1)
 		local epsilon = 1e-6
 
-		if math.nan == math.nan then return (nil)() end
+		if math.nan == math.nan then for a, b in pairs, {"no...."} do end return (nil)() end
 		if string.sub(tostring({}), 8, 15) == string.sub(tostring({}), 8, 15) or not game then return (nil) end
-		if not (vec.x == 1 and vec.y == 1 and vec.z == 1) then return (nil)() end
-		if not (vector.magnitude(vec) - math.sqrt(3) <= epsilon) then return (nil)() end
-		if not (vector.magnitude(vector.normalize(vec)) - 1 <= epsilon) then return (nil)() end
-		if not (vector.magnitude(vector.normalize(vec) - vec / math.sqrt(3)) <= epsilon) then return (nil)() end
-		if not (Vec3.X == 1 and Vec3.Y == 1 and Vec3.Z == 1) then return (nil)() end
-		if not (Vec3.Magnitude - math.sqrt(3) <= epsilon) then return (nil)() end
-		if not (Vec3.Unit.Magnitude - 1 <= epsilon) then return (nil)() end
-		if not ((Vec3.Unit - Vec3 / Vec3.Magnitude).Magnitude <= epsilon) then return (nil)() end
+		if not (vec.x == 1 and vec.y == 1 and vec.z == 1) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vector.magnitude(vec) - math.sqrt(3) <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vector.magnitude(vector.normalize(vec)) - 1 <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vector.magnitude(vector.normalize(vec) - vec / math.sqrt(3)) <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (Vec3.X == 1 and Vec3.Y == 1 and Vec3.Z == 1) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (Vec3.Magnitude - math.sqrt(3) <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (Vec3.Unit.Magnitude - 1 <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not ((Vec3.Unit - Vec3 / Vec3.Magnitude).Magnitude <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
 		local s, e = pcall(function()
 		    return vec[""]
 		end)
-		if not (not s or e == " is not a valid member of Vector3") then return (nil)() end
+		if not (not s or e == " is not a valid member of Vector3") then for a, b in pairs, {"no...."} do end return (nil)() end
 		s, e = pcall(function()
 		    return vec[function() end]
 		end)
 		if not (not s and string.sub(e, -51) == "invalid argument #2 (string expected, got function)") then
+			for a, b in pairs, {"no...."} do end
 			return (nil)()
 		end
 		s, e = pcall(function()
 		    vec[""] = 1
 		end)
 		if not (not s and e == " cannot be assigned to") then
+			for a, b in pairs, {"no...."} do end
 			return (nil)()
 		end
 		s, e = pcall(function()
 		    vec[function() end] = 1
 		end)
 		if not (not s and string.sub(e, -51) == "invalid argument #2 (string expected, got function)") then
+			for a, b in pairs, {"no...."} do end
 			return (nil)()
 		end
 		s, e = pcall(function()
 		    return vec + 1
 		end)
 		if not (not s and string.sub(e, -57) == "attempt to perform arithmetic (add) on Vector3 and number") then
+			for a, b in pairs, {"no...."} do end
 			return (nil)()
 		end
 		s, e = pcall(function()
 		    return vec - 1
 		end)
 		if not (not s and string.sub(e, -57) == "attempt to perform arithmetic (sub) on Vector3 and number") then
+			for a, b in pairs, {"no...."} do end
 			return (nil)()
 		end
 		s, e = pcall(function()
 		    return vec ^ 1
 		end)
 		if not (not s and string.sub(e, -57) == "attempt to perform arithmetic (pow) on Vector3 and number") then
+			for a, b in pairs, {"no...."} do end
 			return (nil)()
 		end
 		s, e = pcall(vec)
 		if not (not s and e == "attempt to call a Vector3 value") then
+			for a, b in pairs, {"no...."} do end
 			return (nil)()
 		end
 		s, e = pcall(function()
 		    return vec["x\0"]
 		end)
-		if not s or e ~= 1 then return (nil)() end
+		if not s or e ~= 1 then for a, b in pairs, {"no...."} do end return (nil)() end
 		s, e = pcall(function(k)
 		    return vec[k]
 		end, "x\0")
-		if not s or e == "x is not a valid member of Vector3" then return (nil)() end
-		if not (vec == Vec3 and Vec3 == vec and rawequal(vec, Vec3)) then return (nil)() end
-		if not (type(vec) == "vector" and typeof(vec) == "Vector3" and type(Vec3) == "vector" and typeof(Vec3) == "Vector3") then return (nil)() end
-		if not (Vec3.x == 1 and Vec3.y == 1 and Vec3.z == 1) then return (nil)() end
-		if not (vector.magnitude(Vec3) - math.sqrt(3) <= epsilon) then return (nil)() end
-		if not (vector.magnitude(vector.normalize(Vec3)) - 1 <= epsilon) then return (nil)() end
-		if not (vector.magnitude(vector.normalize(Vec3) - Vec3 / math.sqrt(3)) <= epsilon) then return (nil)() end
-		if not (vec.X == 1 and vec.Y == 1 and vec.Z == 1) then return (nil)() end
-		if not (vec.Magnitude - math.sqrt(3) <= epsilon) then return (nil)() end
-		if not (vec.Unit.Magnitude - 1 <= epsilon) then return (nil)() end
-		if not ((vec.Unit - vec / vec.Magnitude).Magnitude <= epsilon) then return (nil)() end
-		if not (vector.dot(vec, Vec3) == vec:Dot(Vec3)) then return (nil)() end
+		if not s or e == "x is not a valid member of Vector3" then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vec == Vec3 and Vec3 == vec and rawequal(vec, Vec3)) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (type(vec) == "vector" and typeof(vec) == "Vector3" and type(Vec3) == "vector" and typeof(Vec3) == "Vector3") then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (Vec3.x == 1 and Vec3.y == 1 and Vec3.z == 1) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vector.magnitude(Vec3) - math.sqrt(3) <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vector.magnitude(vector.normalize(Vec3)) - 1 <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vector.magnitude(vector.normalize(Vec3) - Vec3 / math.sqrt(3)) <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vec.X == 1 and vec.Y == 1 and vec.Z == 1) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vec.Magnitude - math.sqrt(3) <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vec.Unit.Magnitude - 1 <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not ((vec.Unit - vec / vec.Magnitude).Magnitude <= epsilon) then for a, b in pairs, {"no...."} do end return (nil)() end
+		if not (vector.dot(vec, Vec3) == vec:Dot(Vec3)) then for a, b in pairs, {"no...."} do end return (nil)() end
 		if not game:GetService("GongService") then 
 			warn':('
 			return (nil)()
+		end
+		local id = workspace:GetDebugId(1/0)--//more undocumented roblox shenanigans
+		if id ~= "14" then
+			for a, b in pairs, {"no...."} do end
+		    return (nil)()
+		end
+		local Result = Color3.fromRGB(255, 128, 0):ToHex()
+
+		if Result ~= "ff8000" then
+			for a, b in pairs, {"no...."} do end
+		    return (nil)()
+		end
+		local Result = Ray.new(Vector3.zero, Vector3.new(10, 0, 0))
+		if Result:ClosestPoint(Vector3.new(5, 5, 0)) ~= Vector3.new(5, 0, 0) then
+			for a, b in pairs, {"no...."} do end
+		    return (nil)()
 		end
 		]]
 		local parsed = Parser:new({LuaVersion = Enums.LuaVersion.Lua51}):parse(code);
