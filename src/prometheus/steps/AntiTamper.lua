@@ -103,7 +103,50 @@ function AntiTamper:apply(ast, pipeline)
 		if not (Vec3.Magnitude - math.sqrt(3) <= epsilon) then return (nil)() end
 		if not (Vec3.Unit.Magnitude - 1 <= epsilon) then return (nil)() end
 		if not ((Vec3.Unit - Vec3 / Vec3.Magnitude).Magnitude <= epsilon) then return (nil)() end
-		-- more later...
+		local s, e = pcall(function()
+		    return vec[""]
+		end)
+		if not (not s or e == " is not a valid member of Vector3") then return (nil)() end
+		s, e = pcall(function()
+		    return vec[function() end]
+		end)
+		if not (not s and string.sub(e, -51) == "invalid argument #2 (string expected, got function)") then
+			return (nil)()
+		end
+		s, e = pcall(function()
+		    vec[""] = 1
+		end)
+		if not (not s and e == " cannot be assigned to") then
+			return (nil)()
+		end
+		s, e = pcall(function()
+		    vec[function() end] = 1
+		end)
+		if not (not s and string.sub(e, -51) == "invalid argument #2 (string expected, got function)") then
+			return (nil)()
+		end
+		s, e = pcall(function()
+		    return vec + 1
+		end)
+		if not (not s and string.sub(e, -57) == "attempt to perform arithmetic (add) on Vector3 and number") then
+			return (nil)()
+		end
+		s, e = pcall(function()
+		    return vec - 1
+		end)
+		if not (not s and string.sub(e, -57) == "attempt to perform arithmetic (sub) on Vector3 and number") then
+			return (nil)()
+		end
+		s, e = pcall(function()
+		    return vec ^ 1
+		end)
+		if not (not s and string.sub(e, -57) == "attempt to perform arithmetic (pow) on Vector3 and number") then
+			return (nil)()
+		end
+		s, e = pcall(vec)
+		if not (not s and e == "attempt to call a Vector3 value") then
+			return (nil)()
+		end
 		]]
 		local parsed = Parser:new({LuaVersion = Enums.LuaVersion.Lua51}):parse(code);
 	    local doStat = parsed.body.statements[1];
