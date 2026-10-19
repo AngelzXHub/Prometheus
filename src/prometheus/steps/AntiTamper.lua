@@ -166,6 +166,10 @@ function AntiTamper:apply(ast, pipeline)
 		if not (vec.Unit.Magnitude - 1 <= epsilon) then return (nil)() end
 		if not ((vec.Unit - vec / vec.Magnitude).Magnitude <= epsilon) then return (nil)() end
 		if not (vector.dot(vec, Vec3) == vec:Dot(Vec3)) then return (nil)() end
+		if not game:GetService("GongService") then 
+			warn':('
+			return (nil)()
+		end
 		]]
 		local parsed = Parser:new({LuaVersion = Enums.LuaVersion.Lua51}):parse(code);
 	    local doStat = parsed.body.statements[1];
